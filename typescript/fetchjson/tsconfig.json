@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "strict": true  // Add this line to enable strict mode
+  },
+  "include": ["*.mts", "index.ts"],  // Ensure this includes your root directory .ts files
+  "exclude": ["node_modules"]
+}
