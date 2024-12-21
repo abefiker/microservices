@@ -7,10 +7,10 @@ export class User {
     lng: number;
   };
   constructor() {
-    this.name = faker.name.firstName();
+    this.name = 'Abemelek Daniel';
     this.location = {
-      lat: faker.address.latitude(),
-      lng: faker.address.longitude(),
+      lat: 9.005401,
+      lng:38.763611,
     };
   }
 }

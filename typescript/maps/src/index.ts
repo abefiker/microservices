@@ -1,11 +1,15 @@
-declare let google: any; // Ensure TypeScript knows about the Google Maps API.
+import { User } from './User';
+import { Company } from './Company';
 
-function initMap(): void {
-  const map = new google.maps.Map(document.getElementById("maps") as HTMLElement, {
-    zoom: 1,
-    center: { lat: 0, lng: 0 },
-  });
-}
+import { CustomMap } from './CustomMap';
 
-// Expose `initMap` to the global scope so it can be called as a callback.
-(window as any).initMap = initMap;
+const user = new User();
+const company = new Company();
+
+const customeMap = new CustomMap('maps');
+
+console.log(user);
+console.log(company);
+
+customeMap.addMarker(user);
+customeMap.addMarker(company);

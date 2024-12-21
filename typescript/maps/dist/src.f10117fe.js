@@ -117,19 +117,96 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/index.ts":[function(require,module,exports) {
-function initMap() {
-  var map = new google.maps.Map(document.getElementById("maps"), {
-    zoom: 1,
-    center: {
-      lat: 0,
-      lng: 0
-    }
-  });
-}
-// Expose `initMap` to the global scope so it can be called as a callback.
-window.initMap = initMap;
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+})({"src/User.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.User = void 0;
+var User = /** @class */function () {
+  function User() {
+    this.name = 'Abemelek Daniel';
+    this.location = {
+      lat: 9.005401,
+      lng: 38.763611
+    };
+  }
+  return User;
+}();
+exports.User = User;
+},{}],"src/Company.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Company = void 0;
+var Company = /** @class */function () {
+  function Company() {
+    this.name = 'Jegol Harar Ethiopia, Hospital';
+    // this.catchPhrase = faker.company.catchPhrase();
+    this.location = {
+      lat: 9.3095,
+      lng: 42.1363
+    };
+  }
+  return Company;
+}();
+exports.Company = Company;
+},{}],"src/CustomMap.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CustomMap = void 0;
+var CustomMap = /** @class */function () {
+  function CustomMap(dividId) {
+    this.googleMap = new google.maps.Map(document.getElementById(dividId), {
+      zoom: 1,
+      center: {
+        lat: 0,
+        lng: 0
+      }
+    });
+  }
+  CustomMap.prototype.addMarker = function (mappable) {
+    var _this = this;
+    var marker = new google.maps.Marker({
+      map: this.googleMap,
+      position: {
+        lat: mappable.location.lat,
+        lng: mappable.location.lng
+      }
+    });
+    marker.addListener('click', function () {
+      var infoWindow = new google.maps.InfoWindow({
+        content: "".concat(mappable.name)
+      });
+      infoWindow.open(_this.googleMap, marker);
+    });
+  };
+  return CustomMap;
+}();
+exports.CustomMap = CustomMap;
+},{}],"src/index.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var User_1 = require("./User");
+var Company_1 = require("./Company");
+var CustomMap_1 = require("./CustomMap");
+var user = new User_1.User();
+var company = new Company_1.Company();
+var customeMap = new CustomMap_1.CustomMap('maps');
+console.log(user);
+console.log(company);
+customeMap.addMarker(user);
+customeMap.addMarker(company);
+},{"./User":"src/User.ts","./Company":"src/Company.ts","./CustomMap":"src/CustomMap.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -154,7 +231,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54780" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49154" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
