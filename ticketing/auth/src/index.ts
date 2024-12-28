@@ -10,8 +10,8 @@ const start = async () => {
   } catch (err) {
     console.log(`Error: ${err}`);
   }
-  app.listen(3030, () => {
-    console.log('Auth service running on port 3030');
+  app.listen(3000, () => {
+    console.log('Auth service running on port 3000');
   });
 };
 start();
