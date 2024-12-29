@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 import { json } from 'body-parser';
@@ -6,8 +6,7 @@ import { CurrentUserRouter } from './routes/current-user';
 import { SignupRouter } from './routes/signup';
 import { SigninRouter } from './routes/signin';
 import { SignoutRouter } from './routes/signout';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { errorHandler, NotFoundError } from '@abticketing/common';
 
 const app = express();
 
@@ -24,18 +23,11 @@ app.use(CurrentUserRouter);
 app.use(SignupRouter);
 app.use(SigninRouter);
 app.use(SignoutRouter);
-app.all('*', async (req, res) => {
+app.all('*', async (reqRequest, res: Response) => {
   throw new NotFoundError();
 });
-app.use(
-  (
-    err: Error,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    errorHandler(err, req, res, next);
-  }
-);
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  errorHandler(err, req, res, next);
+});
 
 export { app };
