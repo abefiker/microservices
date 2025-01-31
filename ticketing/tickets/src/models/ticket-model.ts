@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 // an interface that describes the properties
 // that are required to create a new ticket
 interface TicketAttributes {
   title: string;
   price: number;
-  userid: string;
+  userId: string;
 }
 // an interface that describes the properties
 // that a ticket model has
@@ -18,7 +18,8 @@ interface TicketModel extends mongoose.Model<TicketDocument> {
 interface TicketDocument extends mongoose.Document<any> {
   title: string;
   price: number;
-  userid: string;
+  userId: string;
+  version: number;
 }
 
 const ticketSchema = new mongoose.Schema(
@@ -32,14 +33,13 @@ const ticketSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    userid: {
+    userId: {
       type: String,
       required: true,
     },
   },
   {
     toJSON: {
-      versionKey: false,
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
@@ -47,7 +47,8 @@ const ticketSchema = new mongoose.Schema(
     },
   }
 );
-
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
 ticketSchema.statics.build = (attributes: TicketAttributes) => {
   return new Ticket(attributes);
 };

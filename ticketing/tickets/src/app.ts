@@ -14,12 +14,15 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: process.env.NODE_ENV !== 'test',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
   })
 );
+
+
+app.use(currentUser);
 app.use(indexTicketRouter);
 app.use(showTicketRouter);
-app.use(currentUser);
 app.use(createTicketRouter);
 app.use(updateTicketRouter);
 app.all('*', async (reqRequest, res: Response) => {

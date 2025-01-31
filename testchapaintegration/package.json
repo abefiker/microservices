@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "chapa-nodejs": "^2.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

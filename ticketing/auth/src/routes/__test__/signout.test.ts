@@ -17,6 +17,6 @@ it('clears cookie after sign out', async () => {
     .send({})
     .expect(200);
   expect(response.get('Set-Cookie')).toEqual([
-    'session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly',
+    'session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; samesite=strict; httponly',
   ]);
 });

@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import { Ticket } from '../models/ticket-model';
 import { body } from 'express-validator';
+import { TicketUpdatedPublisher } from '../events/publisher/ticket-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 import {
   NotAuthorizedError,
   NotFoundError,
@@ -27,7 +29,7 @@ router.put(
     if (!ticket) {
       throw new NotFoundError();
     }
-    if (ticket.userid !== req.currentUser!.id) {
+    if (ticket.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
     ticket.set({
@@ -35,6 +37,13 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+      version: ticket.version,
+    });
     res.status(200).send(ticket);
   }
 );
